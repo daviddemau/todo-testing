@@ -93,7 +93,7 @@
 	 * object and it'll handle the DOM insertion and saving of the new item.
 	 */
 
-	 //faute de frappe corrigée : 'adddItem' => 'addItem';
+	 //debug: faute de frappe corrigée : 'adddItem' => 'addItem';
 	Controller.prototype.addItem = function (title) {
 		var self = this;
 
@@ -164,7 +164,7 @@
 			items = data;
 		});
 
-		// est-il nécessaire de faire cette boucle?
+		//debug: console.log à chaque fois qu'une tâche est supprimée. 
 
 		// items.forEach(function(item) {
 			// if (item.id === id) {

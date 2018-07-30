@@ -104,9 +104,10 @@
 			localStorage[this._dbName] = JSON.stringify(data);
 			callback.call(this, todos);
 		} else {
-				//make sure that newId is unique
 				generateId();
 
+
+		//debug: function that generates a unique Id
 		function generateId() {
 			// Generate an ID
 					for (var i = 0; i < 6; i++) {
@@ -121,7 +122,6 @@
 				}
 		}
 
-
 		  updateData.id = parseInt(newId);
 			todos.push(updateData);
 			localStorage[this._dbName] = JSON.stringify(data);
@@ -135,29 +135,46 @@
 	 * @param {number} id The ID of the item you want to remove
 	 * @param {function} callback The callback to fire after saving
 	 */
+
+	// Store.prototype.remove = function (id, callback) {
+	// var data = JSON.parse(localStorage[this._dbName]);
+	// var todos = data.todos;
+	// var todoId;
+	//
+	// for (var i = 0; i < todos.length; i++) {
+	// 	if (todos[i].id == id) {
+	// 		todoId = todos[i].id;
+	// 	}
+	// }
+	//
+	// for (var i = 0; i < todos.length; i++) {
+	// 	if (todos[i].id == todoId) {
+	// 		todos.splice(i, 1);
+	// 	}
+	// }
+
+
 	Store.prototype.remove = function (id, callback) {
 		var data = JSON.parse(localStorage[this._dbName]);
 		var todos = data.todos;
-		// var todoId;
 
-		//On pourrait faire le même travail avec une seule boucle.
-
-		// for (var i = 0; i < todos.length; i++) {
-		// 	if (todos[i].id == id) {
-		// 		todoId = id;
-		// 	}
-		// }
-
+		//debug: On pourrait faire le même travail avec une seule boucle.
 		for (var i = 0; i < todos.length; i++) {
 			if (todos[i].id == id) {
 				todos.splice(i, 1);
 			}
 		}
 
-
 		localStorage[this._dbName] = JSON.stringify(data);
 		callback.call(this, todos);
 	};
+
+
+
+	localStorage[this._dbName] = JSON.stringify(data);
+	callback.call(this, todos);
+};
+
 
 	/**
 	 * Will drop all storage and start fresh
