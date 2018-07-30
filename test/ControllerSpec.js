@@ -63,6 +63,7 @@ describe('controller', function () {
 		var todo = {title: 'my todo'};
 		setUpModel([todo]);
 
+		subject.setView('');
 		subject.showAll();
 
 		expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
@@ -81,7 +82,7 @@ describe('controller', function () {
 		});
 
 		it('should show all entries without "all" route', function () {
-			var todo = {title: 'my todo'};
+			var todo = [{title: 'todo1', id:42}, {title: 'todo2', id:7}];
 			setUpModel([todo]);
 
 			subject.setView('#/');
@@ -162,7 +163,7 @@ describe('controller', function () {
 		// TODO: write test
 		setUpModel([]);
 
-		subject.setView('')
+		subject._updateFilterState('');
 
 		expect(view.render).toHaveBeenCalledWith('setFilter','');
 	});
@@ -182,15 +183,10 @@ describe('controller', function () {
 			var todo = {title: 'my todo', completed: false};
 			setUpModel([todo]);
 
-			subject.setView('');
-			subject.toggleAll();
+			subject.toggleAll({checked: true});
 
-			view.trigger('toggleAll','all todos to completed');
-
-			expect(model.read).toHaveBeenCalled();
-			expect(view.render).toHaveBeenCalledWith('showEntries', {
-				title: 'my todo',
-				completed: true
+			expect(view.render).toHaveBeenCalledWith('toggleAll', {
+				checked: true
 			})
 		});
 
