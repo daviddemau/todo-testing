@@ -63,7 +63,6 @@ describe('controller', function () {
 		var todo = {title: 'my todo'};
 		setUpModel([todo]);
 
-		subject.setView('');
 		subject.showAll();
 
 		expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
@@ -92,15 +91,17 @@ describe('controller', function () {
 
 		it('should show active entries', function () {
 			// TODO: write test
-			var todo = [{title: 'my todo', completed: true}, {title: 'my todo', completed: false}];
-			setUpModel(todo);
+			var todo1 = [{title: 'my todo', completed: true}];
+			var todo2 = [{title: 'my todo', completed: false}];
+			setUpModel(todo1);
+			setUpModel(todo2);
 
 			subject.showActive();
 
 			expect(model.read).toHaveBeenCalled();
 
-			expect(view.render).toHaveBeenCalledWith('showEntries', todo[1]);
-			expect(view.render).not.toHaveBeenCalledWith('showEntries', todo[0]);
+			expect(view.render).toHaveBeenCalledWith('showEntries', todo2);
+			expect(view.render).not.toHaveBeenCalledWith('showEntries', todo1);
 		});
 
 		it('should show completed entries', function () {
@@ -180,14 +181,17 @@ describe('controller', function () {
 	describe('toggle all', function () {
 		it('should toggle all todos to completed', function () {
 			// TODO: write test
-			var todo = {title: 'my todo', completed: false};
-			setUpModel([todo]);
+			var todo = [{id: 3, title: 'todo1', completed: false}];
+			setUpModel(todo);
 
-			subject.toggleAll({checked: true});
+			subject.setView('');
+			subject.toggleAll(true);
 
-			expect(view.render).toHaveBeenCalledWith('toggleAll', {
-				checked: true
-			})
+			expect(model.read).toHaveBeenCalled();
+			expect(view.render).toHaveBeenCalledWith('elementComplete', {
+				id: 3,
+				completed: true
+			});
 		});
 
 		it('should update the view', function () {
@@ -197,10 +201,10 @@ describe('controller', function () {
 
 			subject.setView('');
 
-			//on supprime une tâche, puis on vérifie que le nombre d'éléments dans view est égal à 1.
+			//on supprime une tâche, puis on vérifie que view
 			view.trigger('itemRemove', {id: 17});
 
-			expect(view.render).toHaveBeenCalledWith('updateElementCount', 1);
+			expect(view.render).toHaveBeenCalledWith('removeItem', 17);
 	});
 
 	describe('new todo', function () {
