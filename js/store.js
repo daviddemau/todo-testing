@@ -74,21 +74,44 @@
 	 * @param {function} callback The callback to fire after saving
 	 * @param {number} id An optional param to enter an ID of an item to update
 	 */
+
+	//debug: s'assurer que le nouvel id créé est vraiment unique dans la méthode save
 	Store.prototype.save = function (updateData, callback, id) {
 		var data = JSON.parse(localStorage[this._dbName]);
 		var todos = data.todos;
 
 		callback = callback || function () {};
 
-		// Generate an ID
-			var newId = "";
-			var charset = "0123456789";
+		// 	var newId = "";
+		// 	var charset = "0123456789";
+		//
+		// 		for (var i = 0; i < 6; i++) {
+		// 		newId += charset.charAt(Math.floor(Math.random() * charset.length));
+		// }
 
-				for (var i = 0; i < 6; i++) {
-				newId += charset.charAt(Math.floor(Math.random() * charset.length));
+		//générer newId
+		var newId = "";
+		var charset = "0123456789";
+
+		for (var i = 0; i < 6; i++) {
+			newId += charset.charAt(Math.floor(Math.random() * charset.length));
+		}
+
+		//regrouper tous les IDs existants dans un tableau ids
+		var ids = [];
+
+		for(var i = 0; i < todos.length; i++) {
+		  ids.push(todos[i].id);
+		}
+
+		// Tant que newId est dans le tableau ids, en générer un nouveau pour être sur que newId est unique.
+		while(ids.includes(newId)) {
+			for (var i = 0; i < 6; i++) {
+			newId += charset.charAt(Math.floor(Math.random() * charset.length));
 			}
+		}
 
-
+		//continuer la fonction comme dans le code d'origine
 
 		// If an ID was actually given, find the item and update each property
 		if (id) {
@@ -104,32 +127,12 @@
 			localStorage[this._dbName] = JSON.stringify(data);
 			callback.call(this, todos);
 		} else {
-				generateId();
-
-
-
 		  updateData.id = parseInt(newId);
 			todos.push(updateData);
 			localStorage[this._dbName] = JSON.stringify(data);
 			callback.call(this, [updateData]);
 		}
 	};
-
-	//debug: function that generates a unique Id
-	function generateId() {
-		// Generate an ID
-				for (var i = 0; i < 6; i++) {
-				newId += charset.charAt(Math.floor(Math.random() * charset.length));
-			}
-
-			//check if Id is already existing
-			for (var i = 0; i < todos.length; i++) {
-				if(todos[i].id == newId) {
-					generateId();
-				}
-			}
-	}
-
 
 	/**
 	 * Will remove an item from the Store based on its ID
@@ -138,29 +141,31 @@
 	 * @param {function} callback The callback to fire after saving
 	 */
 
-	// Store.prototype.remove = function (id, callback) {
-	// var data = JSON.parse(localStorage[this._dbName]);
-	// var todos = data.todos;
-	// var todoId;
+	//  Store.prototype.remove = function (id, callback) {
+ 	// 	var data = JSON.parse(localStorage[this._dbName]);
+ 	// 	var todos = data.todos;
+ 	// 	var todoId;
 	//
-	// for (var i = 0; i < todos.length; i++) {
-	// 	if (todos[i].id == id) {
-	// 		todoId = todos[i].id;
-	// 	}
-	// }
+ 	// 	for (var i = 0; i < todos.length; i++) {
+ 	// 		if (todos[i].id == id) {
+ 	// 			todoId = todos[i].id;
+ 	// 		}
+ 	// 	}
 	//
-	// for (var i = 0; i < todos.length; i++) {
-	// 	if (todos[i].id == todoId) {
-	// 		todos.splice(i, 1);
-	// 	}
-	// }
+ 	// 	for (var i = 0; i < todos.length; i++) {
+ 	// 		if (todos[i].id == todoId) {
+ 	// 			todos.splice(i, 1);
+ 	// 		}
+ 	// 	}
+	//
+ 	// 	localStorage[this._dbName] = JSON.stringify(data);
+ 	// 	callback.call(this, todos);
+ 	// };
 
-
-	Store.prototype.remove = function (id, callback) {
+	 Store.prototype.remove = function (id, callback) {
 		var data = JSON.parse(localStorage[this._dbName]);
 		var todos = data.todos;
 
-		//debug: On pourrait faire le même travail avec une seule boucle.
 		for (var i = 0; i < todos.length; i++) {
 			if (todos[i].id == id) {
 				todos.splice(i, 1);
@@ -171,12 +176,20 @@
 		callback.call(this, todos);
 	};
 
-
-
-	localStorage[this._dbName] = JSON.stringify(data);
-	callback.call(this, todos);
-};
-
+	// Store.prototype.remove = function (id, callback) {
+	// 	var data = JSON.parse(localStorage[this._dbName]);
+	// 	var todos = data.todos;
+	//
+	// 	//debug: On pourrait faire le même travail avec une seule boucle.
+	// 	for (var i = 0; i < todos.length; i++) {
+	// 		if (todos[i].id == id) {
+	// 			todos.splice(i, 1);
+	// 		}
+	// 	}
+	//
+	// 	localStorage[this._dbName] = JSON.stringify(data);
+	// 	callback.call(this, todos);
+	// };
 
 	/**
 	 * Will drop all storage and start fresh

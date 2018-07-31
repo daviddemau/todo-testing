@@ -164,13 +164,14 @@
 			items = data;
 		});
 
-		//debug: console.log à chaque fois qu'une tâche est supprimée.
-
 		// items.forEach(function(item) {
 			// if (item.id === id) {
 			// 	console.log("Element with ID: " + id + " has been removed.");
 			// }
 		// });
+
+
+		//debug: boucle forEach seulement pour logguer qu'une tâche a été supprimée. On peut logguer cette information plus tard et éviter de multiplier les boucles.
 
 		self.model.remove(id, function () {
 			//logger les informations ici.
