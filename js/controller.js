@@ -164,7 +164,7 @@
 			items = data;
 		});
 
-		//debug: console.log à chaque fois qu'une tâche est supprimée. 
+		//debug: console.log à chaque fois qu'une tâche est supprimée.
 
 		// items.forEach(function(item) {
 			// if (item.id === id) {
@@ -292,3 +292,20 @@
 	window.app = window.app || {};
 	window.app.Controller = Controller;
 })(window);
+
+
+
+// function generateId() {
+// 	//tu crées un ID unique PAS VERIF
+// }
+//
+// ids = [];
+// for( tous les ids de mon appli) {
+// 	ids.push(id);
+// }
+//
+// uniqId = generateId();
+//
+// while(uniqId.is.in(ids) {
+// 	uniqId = generateId();
+// }

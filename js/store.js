@@ -107,20 +107,6 @@
 				generateId();
 
 
-		//debug: function that generates a unique Id
-		function generateId() {
-			// Generate an ID
-					for (var i = 0; i < 6; i++) {
-					newId += charset.charAt(Math.floor(Math.random() * charset.length));
-				}
-
-				//check if Id is already existing
-				for (var i = 0; i < todos.length; i++) {
-					if(todos[i].id == newId) {
-						generateId();
-					}
-				}
-		}
 
 		  updateData.id = parseInt(newId);
 			todos.push(updateData);
@@ -128,6 +114,22 @@
 			callback.call(this, [updateData]);
 		}
 	};
+
+	//debug: function that generates a unique Id
+	function generateId() {
+		// Generate an ID
+				for (var i = 0; i < 6; i++) {
+				newId += charset.charAt(Math.floor(Math.random() * charset.length));
+			}
+
+			//check if Id is already existing
+			for (var i = 0; i < todos.length; i++) {
+				if(todos[i].id == newId) {
+					generateId();
+				}
+			}
+	}
+
 
 	/**
 	 * Will remove an item from the Store based on its ID
