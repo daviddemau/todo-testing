@@ -162,6 +162,8 @@
  	// 	callback.call(this, todos);
  	// };
 
+
+	 //debug: On pourrait faire le même travail avec une seule boucle.
 	 Store.prototype.remove = function (id, callback) {
 		var data = JSON.parse(localStorage[this._dbName]);
 		var todos = data.todos;
@@ -175,21 +177,6 @@
 		localStorage[this._dbName] = JSON.stringify(data);
 		callback.call(this, todos);
 	};
-
-	// Store.prototype.remove = function (id, callback) {
-	// 	var data = JSON.parse(localStorage[this._dbName]);
-	// 	var todos = data.todos;
-	//
-	// 	//debug: On pourrait faire le même travail avec une seule boucle.
-	// 	for (var i = 0; i < todos.length; i++) {
-	// 		if (todos[i].id == id) {
-	// 			todos.splice(i, 1);
-	// 		}
-	// 	}
-	//
-	// 	localStorage[this._dbName] = JSON.stringify(data);
-	// 	callback.call(this, todos);
-	// };
 
 	/**
 	 * Will drop all storage and start fresh
