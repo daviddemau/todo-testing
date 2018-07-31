@@ -63,6 +63,7 @@ describe('controller', function () {
 		var todo = {title: 'my todo'};
 		setUpModel([todo]);
 
+		subject.setView('');
 		subject.showAll();
 
 		expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
@@ -91,17 +92,15 @@ describe('controller', function () {
 
 		it('should show active entries', function () {
 			// TODO: write test
-			var todo1 = [{title: 'my todo', completed: true}];
-			var todo2 = [{title: 'my todo', completed: false}];
-			setUpModel(todo1);
-			setUpModel(todo2);
+			var todo = [{title: 'my todo', completed: true}, {title: 'my todo', completed: false}];
+			setUpModel(todo);
 
 			subject.showActive();
 
 			expect(model.read).toHaveBeenCalled();
 
-			expect(view.render).toHaveBeenCalledWith('showEntries', todo2);
-			expect(view.render).not.toHaveBeenCalledWith('showEntries', todo1);
+			expect(view.render).toHaveBeenCalledWith('showActive', todo[1]);
+			expect(view.render).not.toHaveBeenCalledWith('showActive', todo[0]);
 		});
 
 		it('should show completed entries', function () {
