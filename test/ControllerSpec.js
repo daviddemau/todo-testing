@@ -72,12 +72,12 @@ describe('controller', function () {
 
 		it('should show all entries without a route', function () {
 			// TODO: write test
-			var todo = {title: 'my todo', completed: false};
-			setUpModel([todo]);
+			var todo = [{title: 'todo1', id:42}, {title: 'todo2', id:7}];
+			setUpModel(todo);
 
 			subject.setView('');
 
-			expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
+			expect(view.render).toHaveBeenCalledWith('showEntries', todo);
 		});
 
 		it('should show all entries without "all" route', function ()  {
@@ -156,7 +156,7 @@ describe('controller', function () {
 		// TODO: write test
 		setUpModel([]);
 
-		subject._updateFilterState('');
+		subject.setView('');
 
 		expect(view.render).toHaveBeenCalledWith('setFilter','');
 	});
@@ -189,10 +189,8 @@ describe('controller', function () {
 			// TODO: write test
 			var todo = {id: 42, title: 'my todo', completed: true};
 			setUpModel([todo]);
-
 			subject.setView('');
 
-			//on supprime la tâche présente dans View, puis on vérifie que View a bien été mis à jour avec 0 tâche
 			view.trigger('itemRemove', {id: 42});
 
 			expect(view.render).toHaveBeenCalledWith('removeItem', 42);
