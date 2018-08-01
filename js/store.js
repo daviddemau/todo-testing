@@ -97,7 +97,7 @@
 			newId += charset.charAt(Math.floor(Math.random() * charset.length));
 		}
 
-		//regrouper tous les IDs existants dans un tableau ids
+		//regrouper tous les IDs existants dans un tableau
 		var ids = [];
 
 		for(var i = 0; i < todos.length; i++) {

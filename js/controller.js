@@ -93,7 +93,7 @@
 	 * object and it'll handle the DOM insertion and saving of the new item.
 	 */
 
-	 //debug: faute de frappe corrigée : 'adddItem' => 'addItem';
+	//debug: faute de frappe corrigée : 'adddItem' => 'addItem';
 	Controller.prototype.addItem = function (title) {
 		var self = this;
 
@@ -171,8 +171,8 @@
 		// });
 
 
-		//debug: boucle forEach seulement pour logguer qu'une tâche a été supprimée. On peut logguer cette information plus tard et éviter de multiplier les boucles.
-
+		//debug: boucle forEach seulement pour logguer qu'une tâche a été supprimée.
+		// On peut logguer cette information ici et éviter de multiplier les boucles.
 		self.model.remove(id, function () {
 			//logger les informations ici.
 			console.log("Element with ID: " + id + " has been removed.");
