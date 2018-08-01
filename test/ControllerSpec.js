@@ -63,7 +63,6 @@ describe('controller', function () {
 		var todo = {title: 'my todo'};
 		setUpModel([todo]);
 
-		subject.setView('');
 		subject.showAll();
 
 		expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
@@ -81,7 +80,7 @@ describe('controller', function () {
 			expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
 		});
 
-		it('should show all entries without "all" route', function () {
+		it('should show all entries without "all" route', function ()  {
 			var todo = [{title: 'todo1', id:42}, {title: 'todo2', id:7}];
 			setUpModel([todo]);
 
@@ -92,28 +91,22 @@ describe('controller', function () {
 
 		it('should show active entries', function () {
 			// TODO: write test
-			var todo = [{title: 'my todo', completed: true}, {title: 'my todo', completed: false}];
+			var todo = [{title: 'my todo', completed: false}];
 			setUpModel(todo);
 
 			subject.showActive();
 
-			expect(model.read).toHaveBeenCalled();
-
-			expect(view.render).toHaveBeenCalledWith('showActive', todo[1]);
-			expect(view.render).not.toHaveBeenCalledWith('showActive', todo[0]);
+			expect(view.render).toHaveBeenCalledWith('showEntries', todo);
 		});
 
 		it('should show completed entries', function () {
 			// TODO: write test
-			var todo = [{title: 'my todo', completed: false}, {title: 'my todo', completed: true}];
+			var todo = [{title: 'my todo', completed: true}];
 			setUpModel(todo);
 
 			subject.showCompleted();
 
-			expect(model.read).toHaveBeenCalled();
-
-			expect(view.render).toHaveBeenCalledWith('showEntries', todo[1]);
-			expect(view.render).not.toHaveBeenCalledWith('showEntries', todo[0]);
+			expect(view.render).toHaveBeenCalledWith('showEntries', todo);
 		});
 	});
 
@@ -186,7 +179,6 @@ describe('controller', function () {
 			subject.setView('');
 			subject.toggleAll(true);
 
-			expect(model.read).toHaveBeenCalled();
 			expect(view.render).toHaveBeenCalledWith('elementComplete', {
 				id: 3,
 				completed: true
@@ -195,15 +187,15 @@ describe('controller', function () {
 
 		it('should update the view', function () {
 			// TODO: write test
-			var todo = [{id: 42, title: 'my todo', completed: true}, {id: 17, title: 'my todo', completed: false}];
-			setUpModel(todo);
+			var todo = {id: 42, title: 'my todo', completed: true};
+			setUpModel([todo]);
 
 			subject.setView('');
 
-			//on supprime une tâche, puis on vérifie que view
-			view.trigger('itemRemove', {id: 17});
+			//on supprime la tâche présente dans View, puis on vérifie que View a bien été mis à jour avec 0 tâche
+			view.trigger('itemRemove', {id: 42});
 
-			expect(view.render).toHaveBeenCalledWith('removeItem', 17);
+			expect(view.render).toHaveBeenCalledWith('removeItem', 42);
 	});
 
 	describe('new todo', function () {
